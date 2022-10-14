@@ -1,0 +1,156 @@
+basePath: /v1
+definitions:
+  httputil.HTTPError:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: status bad request
+        type: string
+    type: object
+  model.Address:
+    properties:
+      city:
+        type: string
+      postcode:
+        type: integer
+      state:
+        type: string
+    type: object
+  model.User:
+    properties:
+      address:
+        $ref: '#/definitions/model.Address'
+      age:
+        type: integer
+      name:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /user/create:
+    post:
+      consumes:
+      - application/json
+      description: post User
+      parameters:
+      - description: Add User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'message": "success"}'
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Add User
+      tags:
+      - User
+  /user/delete/{name}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete User
+      parameters:
+      - description: delete name
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'message": "success"}'
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Delete an User
+      tags:
+      - User
+  /user/get/{name}:
+    get:
+      consumes:
+      - application/json
+      description: get string by name
+      parameters:
+      - description: User Name
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Show an User
+      tags:
+      - User
+  /user/getall:
+    get:
+      consumes:
+      - application/json
+      description: get all user data
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.User'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: List User
+      tags:
+      - User
+  /user/update:
+    patch:
+      consumes:
+      - application/json
+      description: Update by json User
+      parameters:
+      - description: Update account
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'message": "success"}'
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Update an User
+      tags:
+      - User
+swagger: "2.0"
